@@ -4,6 +4,9 @@
 new.transcend.money {
     # Handle the /warzone path for the crypto war zone app
     handle /warzone* {
+        # Strip /warzone prefix and proxy to Node.js
+        uri strip_prefix /warzone
+        
         # Reverse proxy to your Node.js app running on port 3005
         # CRITICAL: WebSocket support with proper headers
         reverse_proxy localhost:3005 {
@@ -13,7 +16,7 @@ new.transcend.money {
             header_up X-Forwarded-For {remote}
             header_up X-Forwarded-Proto {scheme}
             
-            # WebSocket upgrade headers
+            # WebSocket upgrade headers (critical for Socket.IO)
             header_up Connection {>Connection}
             header_up Upgrade {>Upgrade}
         }
