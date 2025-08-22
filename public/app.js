@@ -76,13 +76,7 @@ class CryptoWarZone {
     }
     
     connectSocket() {
-        // Determine the correct Socket.IO path based on current URL
-        const isProduction = window.location.hostname !== 'localhost';
-        const socketPath = isProduction ? '/warzone/socket.io/' : '/socket.io/';
-        
-        this.socket = io({
-            path: socketPath
-        });
+        this.socket = io();
         
         this.socket.on('connect', () => {
             console.log('✅ Connected to server');
