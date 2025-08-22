@@ -28,20 +28,34 @@ const tradeAnalyzer = new TradeAnalyzer();
 // Initialize Binance stream
 const binanceStream = new BinanceTradeStream();
 
+// Track connected users
+let connectedUsers = 0;
+
 // Handle WebSocket connections
 io.on('connection', (socket) => {
-    console.log('Client connected:', socket.id);
+    // Increment user count
+    connectedUsers++;
+    console.log(`Client connected: ${socket.id} (Total users: ${connectedUsers})`);
     
     // Send current state to new client
     socket.emit('initialData', {
         metrics: tradeAnalyzer.getMetrics(),
         recentTrades: tradeAnalyzer.getRecentTrades(),
         topBuyers: tradeAnalyzer.getTopBuyers(),
-        topSellers: tradeAnalyzer.getTopSellers()
+        topSellers: tradeAnalyzer.getTopSellers(),
+        connectedUsers: connectedUsers
     });
     
+    // Broadcast updated user count to all clients
+    io.emit('userCountUpdate', { connectedUsers: connectedUsers });
+    
     socket.on('disconnect', () => {
-        console.log('Client disconnected:', socket.id);
+        // Decrement user count
+        connectedUsers--;
+        console.log(`Client disconnected: ${socket.id} (Total users: ${connectedUsers})`);
+        
+        // Broadcast updated user count to all remaining clients
+        io.emit('userCountUpdate', { connectedUsers: connectedUsers });
     });
 });
 

@@ -1,0 +1,21 @@
+[Unit]
+Description=Crypto War Zone - Bitcoin Futures Visualization
+After=network.target
+
+[Service]
+Type=simple
+User=tony
+WorkingDirectory=/home/tony/software/intro_transcend_money
+ExecStart=/usr/bin/node src/index.js
+Restart=always
+RestartSec=10
+Environment=NODE_ENV=production
+Environment=PORT=3005
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=crypto-war-zone
+
+[Install]
+WantedBy=multi-user.target

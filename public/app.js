@@ -52,6 +52,7 @@ class CryptoWarZone {
             whaleTrades: document.getElementById('whale-trades'),
             bigTrades: document.getElementById('big-trades'),
             connectionStatus: document.getElementById('connection-status'),
+            connectedUsers: document.getElementById('connected-users'),
             
             // Whale alert
             whaleAlert: document.getElementById('whale-alert'),
@@ -95,6 +96,7 @@ class CryptoWarZone {
             this.updateRecentTrades(data.recentTrades);
             this.updateTopBuyers(data.topBuyers);
             this.updateTopSellers(data.topSellers);
+            this.updateUserCount(data.connectedUsers || 0);
         });
         
         this.socket.on('newTrade', (trade) => {
@@ -103,6 +105,10 @@ class CryptoWarZone {
         
         this.socket.on('metricsUpdate', (metrics) => {
             this.updateMetrics(metrics);
+        });
+        
+        this.socket.on('userCountUpdate', (data) => {
+            this.updateUserCount(data.connectedUsers);
         });
     }
     
@@ -401,6 +407,18 @@ class CryptoWarZone {
     updateConnectionStatus(connected) {
         this.elements.connectionStatus.textContent = connected ? 'LIVE' : 'OFFLINE';
         this.elements.connectionStatus.className = connected ? 'stat-value connected' : 'stat-value disconnected';
+    }
+    
+    updateUserCount(count) {
+        this.elements.connectedUsers.textContent = count;
+        
+        // Add visual effect for user count changes
+        if (count > 0) {
+            this.elements.connectedUsers.classList.add('user-count-pulse');
+            setTimeout(() => {
+                this.elements.connectedUsers.classList.remove('user-count-pulse');
+            }, 1000);
+        }
     }
     
     toggleSound() {

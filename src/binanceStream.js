@@ -33,6 +33,7 @@ class BinanceTradeStream extends EventEmitter {
             this.ws.on('message', (data) => {
                 try {
                     const trade = JSON.parse(data);
+                    console.log('📦 Raw trade received:', JSON.stringify(trade, null, 2));
                     this.processTrade(trade);
                 } catch (error) {
                     console.error('❌ Error parsing trade data:', error);

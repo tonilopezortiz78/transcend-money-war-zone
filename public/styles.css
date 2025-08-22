@@ -836,6 +836,27 @@ body {
     50% { opacity: 0.5; }
 }
 
+/* User count pulse animation */
+.user-count-pulse {
+    animation: userCountPulse 1s ease;
+}
+
+@keyframes userCountPulse {
+    0% { 
+        transform: scale(1);
+        color: #00ffff;
+    }
+    50% { 
+        transform: scale(1.2);
+        color: #ffff00;
+        text-shadow: 0 0 20px #ffff00;
+    }
+    100% { 
+        transform: scale(1);
+        color: #00ffff;
+    }
+}
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
     width: 8px;
