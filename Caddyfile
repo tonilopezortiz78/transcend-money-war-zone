@@ -5,9 +5,20 @@ new.transcend.money {
     # Handle the /warzone path for the crypto war zone app
     handle_path /warzone* {
         # Reverse proxy to your Node.js app running on port 3005
-        reverse_proxy localhost:3005
+        # CRITICAL: WebSocket support with proper headers
+        reverse_proxy localhost:3005 {
+            # Enable WebSocket support
+            header_up Host {host}
+            header_up X-Real-IP {remote}
+            header_up X-Forwarded-For {remote}
+            header_up X-Forwarded-Proto {scheme}
+            
+            # WebSocket upgrade headers
+            header_up Connection {>Connection}
+            header_up Upgrade {>Upgrade}
+        }
         
-        # Add security headers
+        # Add security headers (but not for WebSocket connections)
         header {
             # Security headers
             X-Content-Type-Options nosniff
@@ -17,11 +28,11 @@ new.transcend.money {
             
             # CORS headers for WebSocket and API
             Access-Control-Allow-Origin "*"
-            Access-Control-Allow-Methods "GET, POST, OPTIONS"
-            Access-Control-Allow-Headers "Content-Type, Authorization"
+            Access-Control-Allow-Methods "GET, POST, OPTIONS, UPGRADE"
+            Access-Control-Allow-Headers "Content-Type, Authorization, Upgrade, Connection"
         }
         
-        # Enable compression
+        # Enable compression (but not for WebSocket)
         encode gzip
         
         # Log requests for warzone specifically
