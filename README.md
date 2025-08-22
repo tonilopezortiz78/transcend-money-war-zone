@@ -1,105 +1,248 @@
-# 🔥 CRYPTO WAR ZONE - BTC/USDT Futures Battle Visualization
+# 🔥 TRANSCEND MONEY WAR ZONE - Live Bitcoin Futures Trading Battle
 
-A cyberpunk-style real-time Bitcoin futures trading visualization perfect for YouTube live streams. Watch the epic battle between desperate sellers and aggressive buyers in a futuristic Matrix-inspired interface.
+**The ultimate cyberpunk Bitcoin futures visualization for YouTube live streams and crypto analysis.**
 
-## ⚡ Features
+Watch the epic battle between desperate sellers and aggressive buyers in real-time! Features whale detection, emoji confetti effects, live user counter, and professional affiliate integration with MEXC & Bitunix exchanges.
 
-### 🎮 Real-Time Battle Arena
-- **Split battlefield**: Sellers (red zone) vs Buyers (green zone)
-- **Live trade stream**: Real-time BTC/USDT futures trades from Binance
-- **Whale detection**: Massive trades trigger special alerts and effects
+## 🚀 **LIVE DEMO**
+**Production URL:** `https://new.transcend.money/warzone`
+
+## ⚡ **Key Features**
+
+### 🎮 **Real-Time Trading Battle**
+- **Live BTC/USDT futures** data from Binance WebSocket
+- **24-hour rolling window** metrics (prevents massive numbers after weeks)
+- **Split battlefield**: 🔴 Sellers vs 🟢 Buyers
+- **Whale detection** with dramatic alerts and effects
+- **Live user counter** showing connected viewers
 - **Trade classification**: Automatic buyer/seller identification
 
-### 📊 Big Metrics Dashboard
+### 📊 **Advanced Analytics Dashboard**
 - **Current BTC price** with live updates
-- **Total volume** and quantity in large, glowing numbers
-- **Last minute metrics** for rapid market analysis
-- **Battle statistics** showing buyer vs seller percentages
+- **24H total volume** and quantity tracking
+- **Separate buyer/seller** volume metrics
+- **Last minute metrics** for rapid analysis
+- **Battle statistics** with percentages
+- **Top 10 biggest trades** by USDT volume
 
-### 🎨 Cyberpunk Visual Effects
+### 🎨 **Cyberpunk Visual Experience**
 - **Matrix rain background** with Japanese characters
+- **Emoji confetti system**: 💵 for buyers, 🔥 for sellers
+- **Whale alerts**: Clear "AGGRESSIVE BUYER!" vs "PANIC SELLER!"
+- **Screen effects**: Shake for mega trades, pulse for big trades
 - **Neon glow effects** and cyberpunk color scheme
-- **Screen shake** for whale trades (>$500k)
-- **Glitch effects** for mega trades (>$1M)
-- **Pulse animations** for big trades
+- **Professional animations** throughout
 
-### 📈 Advanced Analytics
-- **Top 10 biggest buyers** by USDT volume
-- **Top 10 biggest sellers** by USDT volume
-- **Last 10 trades** chronological stream
-- **Trade size classification**: TINY → SMALL → MEDIUM → BIG → WHALE → MEGA
+### 💰 **Affiliate Integration**
+- **MEXC Exchange**: Up to $10K USDT bonus, lowest fees
+- **Bitunix Exchange**: 100,000+ USDT newcomer rewards, no KYC
+- **Strategic placement** with subtle pulse animations
+- **Value-first approach** maintaining credibility
 
-## 🚀 Quick Start
+### 🎯 **YouTube Streaming Optimized**
+- **Full-screen mode** for clean streaming capture
+- **Live user counter** for social proof
+- **Sound effects** for different trade sizes
+- **SEO optimized** for maximum crypto trader traffic
+- **Mobile responsive** design
 
-### Installation
+## 🚀 **Quick Start**
+
+### **Local Development**
 ```bash
-# Clone or create the project
-cd /home/tony/software/intro_transcend_money
+# Clone the repository
+git clone https://github.com/tonilopezortiz78/transcend-money-war-zone.git
+cd transcend-money-war-zone
 
 # Install dependencies
 npm install
 
-# Start the server
+# Start development server
 npm start
+# Access: http://localhost:3005
 ```
 
-### Development Mode
+### **Development Commands**
 ```bash
 # Run with auto-reload
 npm run dev
 
-# Run tests
+# Run system tests
 npm test
+
+# Validate configuration
+node test/test_system.js
 ```
 
-## 🎯 Usage
+## 🏭 **Production Deployment**
 
-1. **Start the server**: `npm start`
-2. **Open browser**: Navigate to `http://localhost:3000`
-3. **Full screen**: Press `F` for fullscreen mode (perfect for streaming)
-4. **Sound control**: Press `M` to toggle sound effects
-5. **Reset stats**: Press `R` to reset all statistics
+### **1. Server Setup**
+```bash
+# Clone to production server
+git clone https://github.com/tonilopezortiz78/transcend-money-war-zone.git
+cd transcend-money-war-zone
 
-## 🎬 Perfect for YouTube Live Streams
+# Install dependencies
+npm install --production
 
-### Stream Setup
-- **Full screen mode** for clean streaming
-- **No UI clutter** - pure cyberpunk aesthetics
-- **Dramatic visual effects** keep viewers engaged
-- **Real-time data** shows actual market activity
-- **Sound effects** for different trade sizes
+# Test the application
+npm start
+```
 
-### Streaming Tips
-- Use **OBS Studio** to capture the browser window
-- Enable **full screen mode** (F key) for clean capture
-- Position your webcam overlay in corners
-- The interface works great as a background for crypto discussions
+### **2. Create System Service**
+```bash
+# Copy service file
+sudo cp crypto-war-zone.service /etc/systemd/system/
 
-## 🔧 Technical Details
+# Enable and start service
+sudo systemctl daemon-reload
+sudo systemctl enable crypto-war-zone
+sudo systemctl start crypto-war-zone
 
-### Architecture
+# Check status
+sudo systemctl status crypto-war-zone
+```
+
+### **3. Caddy Reverse Proxy Configuration**
+Add to your `/etc/caddy/Caddyfile`:
+
+```caddy
+new.transcend.money {
+    # Handle /warzone path
+    handle_path /warzone* {
+        reverse_proxy localhost:3005
+        
+        header {
+            X-Content-Type-Options nosniff
+            X-Frame-Options DENY
+            X-XSS-Protection "1; mode=block"
+            Access-Control-Allow-Origin "*"
+            Access-Control-Allow-Methods "GET, POST, OPTIONS"
+            Access-Control-Allow-Headers "Content-Type, Authorization"
+        }
+        
+        encode gzip
+        
+        log {
+            output file /var/log/caddy/warzone.log
+            format json
+        }
+    }
+    
+    # Your existing main site configuration
+    handle {
+        root * /var/www/html/landing
+        encode gzip
+        try_files {path} index.html
+        file_server
+    }
+
+    log {
+        output file /var/log/caddy/access_new.log
+        format json
+    }
+}
+```
+
+### **4. Deploy and Test**
+```bash
+# Reload Caddy configuration
+sudo caddy validate
+sudo systemctl reload caddy
+
+# Access your live site
+# https://new.transcend.money/warzone
+```
+
+### **5. Monitoring & Logs**
+```bash
+# Check application logs
+sudo journalctl -u crypto-war-zone -f
+
+# Check Caddy logs
+sudo tail -f /var/log/caddy/warzone.log
+
+# Monitor system resources
+htop
+```
+
+## 🎯 **Usage & Controls**
+
+### **Basic Controls**
+- **Full screen**: Press `F` for fullscreen mode (perfect for streaming)
+- **Sound control**: Press `M` to toggle sound effects
+- **Reset stats**: Press `R` to reset all statistics
+- **Click anywhere**: Enable sound (browser requirement)
+
+### **Live Features**
+- **Real-time user counter** in footer
+- **Whale alerts** with sound and confetti
+- **24-hour rolling metrics** keep data fresh
+- **WebSocket connection** shows live status
+
+## 🎬 **YouTube Live Streaming**
+
+### **Stream Setup**
+- **Production URL**: `https://new.transcend.money/warzone`
+- **Full screen mode** (F key) for clean capture
+- **Live user counter** for social proof
+- **Dramatic whale alerts** keep viewers engaged
+- **Professional affiliate integration**
+
+### **OBS Studio Configuration**
+```
+1. Add Browser Source
+2. URL: https://new.transcend.money/warzone
+3. Width: 1920, Height: 1080
+4. Enable "Shutdown source when not visible"
+5. Enable "Refresh browser when scene becomes active"
+```
+
+### **Content Ideas**
+- **"Live Bitcoin Battle Analysis"**
+- **"Whale Watch: Who's Buying/Selling?"**
+- **"Crypto Market Psychology in Real-Time"**
+- **"Trading Education with Live Data"**
+
+## 🔧 **Technical Specifications**
+
+### **Architecture**
 - **Backend**: Node.js with Express and Socket.IO
 - **Frontend**: Vanilla JavaScript with WebSocket connections
 - **Data Source**: Binance Futures WebSocket API (BTC/USDT)
 - **Real-time**: Sub-second latency for trade updates
+- **Port**: 3005 (configurable via PORT environment variable)
 
-### Trade Classification
+### **Trade Classification System**
 - **Buyer initiated**: `isBuyerMaker = false` (market buy orders)
 - **Seller initiated**: `isBuyerMaker = true` (market sell orders)
 - **Volume calculation**: Price × Quantity = USDT Volume
 - **Size categories**:
-  - TINY: < $10k
-  - SMALL: $10k - $50k
-  - MEDIUM: $50k - $100k
-  - BIG: $100k - $500k
-  - WHALE: $500k - $1M
-  - MEGA: > $1M
+  - 🔸 **TINY**: < $10k
+  - 🔹 **SMALL**: $10k - $50k  
+  - 🟡 **MEDIUM**: $50k - $100k
+  - 🟠 **BIG**: $100k - $500k
+  - 🔴 **WHALE**: $500k - $1M
+  - 🟣 **MEGA**: > $1M
 
-### Performance
-- **WebSocket connection** to Binance for real-time data
-- **Efficient DOM updates** with minimal reflows
-- **Memory management** with trade list limits
-- **Auto-reconnection** if connection drops
+### **Data Management**
+- **24-hour rolling window** prevents memory bloat
+- **Automatic cleanup** of old trades
+- **Real-time user tracking** via WebSocket connections
+- **Efficient metrics calculation** with live updates
+
+### **Performance Optimizations**
+- **Memory-efficient** data structures
+- **Optimized DOM updates** with minimal reflows
+- **Auto-reconnection** if WebSocket drops
+- **Compressed responses** via gzip
+- **Single-center confetti** for better performance
+
+### **Security & Headers**
+- **CORS enabled** for WebSocket connections
+- **Security headers** via Caddy proxy
+- **XSS protection** and content type validation
+- **Frame protection** against clickjacking
 
 ## 🎨 Customization
 
