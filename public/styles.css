@@ -690,6 +690,15 @@ body {
 }
 
 .affiliate-subtitle {
+    font-size: 1.5rem;
+    color: #ffff00;
+    text-shadow: 0 0 15px #ffff00, 0 0 30px #ffff00;
+    font-weight: 900;
+    margin-bottom: 10px;
+    animation: pulse 2s infinite;
+}
+
+.bonus-text {
     font-size: 1.2rem;
     color: #ff6600;
     text-shadow: 0 0 10px #ff6600;
@@ -723,13 +732,13 @@ body {
 }
 
 .affiliate-card.mexc:hover {
-    box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
-    border-color: #00ff00;
+    box-shadow: 0 0 30px rgba(0, 128, 255, 0.6);
+    border-color: #0080ff;
 }
 
 .affiliate-card.bitunix:hover {
-    box-shadow: 0 0 30px rgba(255, 100, 0, 0.6);
-    border-color: #ff6600;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+    border-color: #00ff00;
 }
 
 .exchange-logo {
@@ -741,11 +750,11 @@ body {
 }
 
 .affiliate-card.mexc .exchange-logo {
-    color: #00ff00;
+    color: #0080ff;
 }
 
 .affiliate-card.bitunix .exchange-logo {
-    color: #ff6600;
+    color: #00ff00;
 }
 
 .exchange-features {
@@ -773,11 +782,11 @@ body {
 }
 
 .affiliate-card.mexc .cta-button {
-    background: linear-gradient(45deg, #00ff00, #44ff44);
+    background: linear-gradient(45deg, #0080ff, #44aaff);
 }
 
 .affiliate-card.bitunix .cta-button {
-    background: linear-gradient(45deg, #ff6600, #ff8844);
+    background: linear-gradient(45deg, #00ff00, #44ff44);
 }
 
 .affiliate-card:hover .cta-button {

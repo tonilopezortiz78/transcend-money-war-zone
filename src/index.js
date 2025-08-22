@@ -58,7 +58,7 @@ binanceStream.on('trade', (trade) => {
 // Start the stream
 binanceStream.start();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3005;
 server.listen(PORT, () => {
     console.log(`🚀 Crypto War Zone server running on port ${PORT}`);
     console.log(`📊 Dashboard: http://localhost:${PORT}`);

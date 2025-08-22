@@ -1,0 +1,47 @@
+# Updated Caddy configuration to integrate with existing new.transcend.money setup
+# Add this to your existing new.transcend.money block:
+
+new.transcend.money {
+    # Handle the /warzone path for the crypto war zone app
+    handle_path /warzone* {
+        # Reverse proxy to your Node.js app running on port 3005
+        reverse_proxy localhost:3005
+        
+        # Add security headers
+        header {
+            # Security headers
+            X-Content-Type-Options nosniff
+            X-Frame-Options DENY
+            X-XSS-Protection "1; mode=block"
+            Referrer-Policy strict-origin-when-cross-origin
+            
+            # CORS headers for WebSocket and API
+            Access-Control-Allow-Origin "*"
+            Access-Control-Allow-Methods "GET, POST, OPTIONS"
+            Access-Control-Allow-Headers "Content-Type, Authorization"
+        }
+        
+        # Enable compression
+        encode gzip
+        
+        # Log requests for warzone specifically
+        log {
+            output file /var/log/caddy/warzone.log
+            format json
+        }
+    }
+    
+    # Your existing configuration for the main site
+    # Set this path to your site's directory.
+    root * /var/www/html/landing
+
+    encode gzip
+    try_files {path} index.html
+    # Enable the static file server.
+    file_server
+
+    log {
+        output file /var/log/caddy/access_new.log
+        format json
+    }
+}
