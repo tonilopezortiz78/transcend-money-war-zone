@@ -166,6 +166,13 @@ class TradeAnalyzer {
         this.metrics.totalQuantity = this.allTrades.reduce((sum, trade) => sum + trade.quantity, 0);
         this.metrics.totalTrades = this.allTrades.length;
         
+        // Update current price to the most recent trade price
+        if (this.allTrades.length > 0) {
+            // Get the most recent trade (last in array)
+            const mostRecentTrade = this.allTrades[this.allTrades.length - 1];
+            this.metrics.currentPrice = mostRecentTrade.price;
+        }
+        
         // Update buyer metrics (24-hour rolling)
         this.metrics.buyerTrades = buyerTrades.length;
         this.metrics.buyerVolumeUSDT = buyerTrades.reduce((sum, trade) => sum + trade.usdtVolume, 0);
