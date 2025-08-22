@@ -14,11 +14,16 @@ const io = socketIo(server, {
     }
 });
 
-// Serve static files
+// Serve static files for both root and warzone paths
 app.use(express.static(path.join(__dirname, '../public')));
+app.use('/warzone', express.static(path.join(__dirname, '../public')));
 
-// Main route
+// Main routes - handle both root and warzone paths
 app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+app.get('/warzone', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 

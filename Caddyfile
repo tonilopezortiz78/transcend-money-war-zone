@@ -3,7 +3,7 @@
 
 new.transcend.money {
     # Handle the /warzone path for the crypto war zone app
-    handle_path /warzone* {
+    handle /warzone* {
         # Reverse proxy to your Node.js app running on port 3005
         # CRITICAL: WebSocket support with proper headers
         reverse_proxy localhost:3005 {
