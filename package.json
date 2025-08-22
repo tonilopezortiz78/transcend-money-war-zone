@@ -1,0 +1,24 @@
+{
+  "name": "crypto-war-zone",
+  "version": "1.0.0",
+  "description": "Cyberpunk real-time BTC/USDT futures trading visualization",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "node test/test_system.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.2",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.4",
+    "node-binance-api": "^0.13.1",
+    "moment": "^2.29.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["crypto", "bitcoin", "futures", "real-time", "cyberpunk", "visualization"],
+  "author": "Tony",
+  "license": "MIT"
+}
