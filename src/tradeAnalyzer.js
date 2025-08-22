@@ -3,6 +3,11 @@ class TradeAnalyzer {
         this.recentTrades = [];
         this.topBuyers = [];
         this.topSellers = [];
+        
+        // Store trades with timestamps for rolling windows
+        this.allTrades = [];
+        this.maxTradeHistory = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+        
         this.metrics = {
             // Total metrics
             totalVolume: 0,
@@ -46,8 +51,20 @@ class TradeAnalyzer {
     }
     
     processTrade(trade) {
-        // Update metrics
-        this.updateMetrics(trade);
+        // Add timestamp for rolling window calculations
+        const tradeWithTimestamp = {
+            ...trade,
+            processedAt: Date.now()
+        };
+        
+        // Store in all trades history
+        this.allTrades.push(tradeWithTimestamp);
+        
+        // Clean old trades (older than 24 hours)
+        this.cleanOldTrades();
+        
+        // Update metrics with 24-hour rolling window
+        this.updateRollingMetrics();
         
         // Add to recent trades (keep only last 10)
         this.recentTrades.unshift(trade);
@@ -129,6 +146,41 @@ class TradeAnalyzer {
         }, 1000); // Update every second
     }
     
+    cleanOldTrades() {
+        const now = Date.now();
+        const cutoffTime = now - this.maxTradeHistory;
+        
+        // Remove trades older than 24 hours
+        this.allTrades = this.allTrades.filter(trade => 
+            trade.processedAt > cutoffTime
+        );
+    }
+    
+    updateRollingMetrics() {
+        // Calculate 24-hour rolling window metrics
+        const buyerTrades = this.allTrades.filter(trade => trade.side === 'BUY');
+        const sellerTrades = this.allTrades.filter(trade => trade.side === 'SELL');
+        
+        // Update total metrics (24-hour rolling)
+        this.metrics.totalVolume = this.allTrades.reduce((sum, trade) => sum + trade.usdtVolume, 0);
+        this.metrics.totalQuantity = this.allTrades.reduce((sum, trade) => sum + trade.quantity, 0);
+        this.metrics.totalTrades = this.allTrades.length;
+        
+        // Update buyer metrics (24-hour rolling)
+        this.metrics.buyerTrades = buyerTrades.length;
+        this.metrics.buyerVolumeUSDT = buyerTrades.reduce((sum, trade) => sum + trade.usdtVolume, 0);
+        this.metrics.buyerQuantityBTC = buyerTrades.reduce((sum, trade) => sum + trade.quantity, 0);
+        
+        // Update seller metrics (24-hour rolling)
+        this.metrics.sellerTrades = sellerTrades.length;
+        this.metrics.sellerVolumeUSDT = sellerTrades.reduce((sum, trade) => sum + trade.usdtVolume, 0);
+        this.metrics.sellerQuantityBTC = sellerTrades.reduce((sum, trade) => sum + trade.quantity, 0);
+        
+        // Update special trade counters (24-hour rolling)
+        this.metrics.whaleTradesCount = this.allTrades.filter(trade => trade.isWhale).length;
+        this.metrics.bigTradesCount = this.allTrades.filter(trade => trade.isBigTrade).length;
+    }
+
     updateLastMinuteMetrics() {
         const now = Date.now();
         const oneMinuteAgo = now - 60000; // 60 seconds ago

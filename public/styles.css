@@ -83,10 +83,24 @@ body {
     text-decoration: none;
     color: inherit;
     transition: all 0.3s ease;
+    animation: subtlePulse 3s ease-in-out infinite;
 }
 
 .exchange-logo-link:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
+    animation: none; /* Stop pulse on hover for better UX */
+}
+
+/* Subtle pulse animation to draw attention without being aggressive */
+@keyframes subtlePulse {
+    0%, 100% { 
+        transform: scale(1.0);
+        opacity: 0.9;
+    }
+    50% { 
+        transform: scale(1.05);
+        opacity: 1.0;
+    }
 }
 
 .exchange-logo-small {
