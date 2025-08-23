@@ -85,20 +85,7 @@ class CryptoWarZone {
     
     connectSocket() {
         console.log('🔌 FRONTEND: Attempting to connect to Socket.IO...');
-        
-        // Try to connect with fallback options for production
-        try {
-            // First try to connect to the current host
-            this.socket = io(window.location.origin, {
-                transports: ['websocket', 'polling'],
-                timeout: 10000,
-                forceNew: true
-            });
-        } catch (error) {
-            console.error('❌ FRONTEND: Socket.IO connection failed:', error);
-            // Fallback to basic connection
-            this.socket = io();
-        }
+        this.socket = io();
         
         this.socket.on('connect', () => {
             console.log('✅ FRONTEND: Connected to server');
