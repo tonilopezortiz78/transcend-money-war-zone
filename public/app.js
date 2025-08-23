@@ -76,19 +76,23 @@ class CryptoWarZone {
     }
     
     connectSocket() {
+        console.log('🔌 FRONTEND: Attempting to connect to Socket.IO...');
         this.socket = io();
         
         this.socket.on('connect', () => {
+            console.log('✅ FRONTEND: Connected to server');
             this.isConnected = true;
             this.updateConnectionStatus(true);
         });
         
         this.socket.on('disconnect', () => {
+            console.log('❌ FRONTEND: Disconnected from server');
             this.isConnected = false;
             this.updateConnectionStatus(false);
         });
         
         this.socket.on('initialData', (data) => {
+            console.log('📊 FRONTEND: Received initial data:', data);
             this.updateMetrics(data.metrics);
             this.updateRecentTrades(data.recentTrades);
             this.updateTopBuyers(data.topBuyers);
@@ -97,23 +101,26 @@ class CryptoWarZone {
         });
         
         this.socket.on('newTrade', (trade) => {
+            console.log('📦 FRONTEND: Received new trade:', trade);
             this.handleNewTrade(trade);
         });
         
         this.socket.on('metricsUpdate', (metrics) => {
+            console.log('📊 FRONTEND: Received metrics update:', metrics);
             this.updateMetrics(metrics);
         });
         
         this.socket.on('userCountUpdate', (data) => {
+            console.log('👥 FRONTEND: User count update:', data);
             this.updateUserCount(data.connectedUsers);
         });
         
         this.socket.on('connect_error', (error) => {
-            // Silent error handling
+            console.error('❌ FRONTEND: Socket.IO connection error:', error);
         });
         
         this.socket.on('error', (error) => {
-            // Silent error handling
+            console.error('❌ FRONTEND: Socket.IO error:', error);
         });
     }
     
