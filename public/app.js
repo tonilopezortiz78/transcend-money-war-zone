@@ -71,13 +71,34 @@ class CryptoWarZone {
     
     init() {
         console.log('🚀 Initializing Crypto War Zone...');
+        
+        // Check if Socket.IO is available
+        if (typeof io === 'undefined') {
+            console.error('❌ Socket.IO not loaded! Retrying in 1 second...');
+            setTimeout(() => this.init(), 1000);
+            return;
+        }
+        
         this.connectSocket();
         this.setupEventListeners();
     }
     
     connectSocket() {
         console.log('🔌 FRONTEND: Attempting to connect to Socket.IO...');
-        this.socket = io();
+        
+        // Try to connect with fallback options for production
+        try {
+            // First try to connect to the current host
+            this.socket = io(window.location.origin, {
+                transports: ['websocket', 'polling'],
+                timeout: 10000,
+                forceNew: true
+            });
+        } catch (error) {
+            console.error('❌ FRONTEND: Socket.IO connection failed:', error);
+            // Fallback to basic connection
+            this.socket = io();
+        }
         
         this.socket.on('connect', () => {
             console.log('✅ FRONTEND: Connected to server');
